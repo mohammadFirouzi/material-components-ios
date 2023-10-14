@@ -58,13 +58,16 @@
 }
 
 - (UIImage *)createImageWithLayer:(CALayer *)layer {
-  UIGraphicsBeginImageContext(layer.frame.size);
+    double width = layer.frame.size.width == 0 ? 0.01 : layer.frame.size.width;
+    double height = layer.frame.size.height == 0 ? 0.01 : layer.frame.size.height;
+    UIGraphicsBeginImageContext(CGSizeMake(width, height));
+    //UIGraphicsBeginImageContext(layer.frame.size);
+    
   [layer renderInContext:UIGraphicsGetCurrentContext()];
   UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
   UIGraphicsEndImageContext();
   return image;
 }
-
 - (CALayer *)createLayerWithImage:(UIImage *)image {
   CALayer *layer = [[CALayer alloc] init];
   layer.frame = CGRectMake(0, 0, image.size.width, image.size.height);
